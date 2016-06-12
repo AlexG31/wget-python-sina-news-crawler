@@ -53,6 +53,7 @@ class rssParser:
                 xmltree = ET.parse(xmlname)
             except Exception as e:
                 print 'Exception! Cannot read xml file:{}\n\n'.format(xmlname)
+                continue
             root = xmltree.getroot()
             items = root.findall('.//item')
             for item in items:

@@ -1,4 +1,3 @@
-#!/usr/local/bin/python
 #encoding:utf-8
 """
 follow all the linked text in the home page of news sites
@@ -100,12 +99,12 @@ def crawl_sinanews_content():
         os.mkdir(savefolder)
     wgg = wgetCrawl()
     news_count = 1
-    pdb.set_trace()
     for news_dict in news_info:
         cur_filepath = os.path.join(savefolder,'news_{}'.format(news_count))
         url = news_dict[u'url']
         news_dict['filepath']= cur_filepath
         wgg.GET(url,cur_filepath)
+        news_count+=1
     # dump to json file
     json_filename = os.path.join(savefolder,'news_url_info.json')
     with codecs.open(json_filename,'w','utf-8') as fout:

@@ -1,4 +1,3 @@
-#!/usr/local/bin/python
 #encoding:utf-8
 """
 follow all the linked text in the home page of news sites
@@ -21,7 +20,7 @@ from newsParser import newsParser
 curfilepath = os.path.realpath('__file__')
 curfolderpath = os.path.dirname(curfilepath)
 #debug
-print 'curfolder path:',curfolderpath
+#print 'curfolder path:',curfolderpath
 
 
 # append current folder to system path
@@ -32,9 +31,10 @@ class wgetCrawl:
     def __init__(self):
         pass
     def GET(self,url,outputfilename):
-        cmdstr = u'wget \'{}\' -O {}'.format(url,outputfilename)
+        cmdstr = u'wget {} -O {}'.format(url,outputfilename)
         print u'command:[{}]'.format(cmdstr)
         cmdstr = cmdstr.encode('utf-8')
+        #pdb.set_trace()
         os.system(cmdstr)
     def GET_urllist(self,urllist,savefolderpath):
         # output
