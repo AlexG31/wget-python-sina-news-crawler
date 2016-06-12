@@ -9,6 +9,8 @@ import os
 import glob
 import sys
 import datetime
+import time
+import threading
 import re
 import codecs
 import pdb
@@ -109,11 +111,27 @@ def crawl_sinanews_content():
     json_filename = os.path.join(savefolder,'news_url_info.json')
     with codecs.open(json_filename,'w','utf-8') as fout:
         json.dump(news_info,fout,indent = 4,sort_keys = True,ensure_ascii= False)
-
+    # scp to sv0
+    copy_to_sv0(savefolder)
+def copy_to_sv0(filepath):
+    sv0IP = r'166.111.66.122'
+    sv0filepath = r'/home/gaopengfei/sina_news'
+    sv0_addr = r'gaopengfei@{}:{}'.format(sv0IP,sv0filepath)
+    cmdstr = u'pscp -pw gpf -r {} {} '.format(filepath,sv0_addr)
+    print u'command:[{}]'.format(cmdstr)
+    cmdstr = cmdstr.encode('utf-8')
+    os.system(cmdstr)
 def start_craw_rss_categories():
     crawl_sina_rss()
     crawl_sinanews_content()
 
-
-if __name__ == '__main__':
+def task_schedule():
+    # work
     start_craw_rss_categories()
+    # next timer
+    timer = threading.Timer(60.0*60*6,task_schedule,[])
+    timer.start()
+if __name__ == '__main__':
+    #start_craw_rss_categories()
+    timer = threading.Timer(60.0*60*6,task_schedule,[])
+    timer.start()
